@@ -1,0 +1,202 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// お客様モデル
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String    // Added for authentication
+  phone     String?
+  role      Role      @default(CUSTOMER)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // リレーション
+  inquiries Inquiry[]
+  payments  Payment[]
+
+  @@index([email])
+  @@map("users")
+}
+
+// Role enumeration
+enum Role {
+  ADMIN
+  COMPANY_OWNER
+  CUSTOMER
+}
+
+// リフォーム業者モデル
+model Company {
+  id                String             @id @default(cuid())
+  name              String
+  email             String             @unique
+  phone             String?
+  instagramHandle   String?            @unique
+  subscriptionStatus String           @default("inactive") // active, inactive, trial
+  maxSlots          Int               @default(300)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  // リレーション
+  subscriptions     Subscription[]
+  instagramPosts    InstagramPost[]
+  selectedInquiries Inquiry[]         @relation("SelectedCompanies")
+
+  @@index([email])
+  @@index([instagramHandle])
+  @@index([subscriptionStatus])
+  @@map("companies")
+}
+
+// リフォームサービスモデル
+model Service {
+  id             String    @id @default(cuid())
+  name           String
+  description    String?
+  estimatedPrice Int?
+  category       String    // kitchen, bathroom, living, exterior, etc.
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // リレーション
+  inquiries      Inquiry[]
+
+  @@index([category])
+  @@map("services")
+}
+
+// 問い合わせモデル
+model Inquiry {
+  id        String    @id @default(cuid())
+  userId    String
+  message   String?
+  status    String    @default("pending") // pending, processing, completed, cancelled
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // リレーション
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  services          Service[]
+  selectedCompanies Company[] @relation("SelectedCompanies")
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("inquiries")
+}
+
+// サブスクリプションモデル
+model Subscription {
+  id        String    @id @default(cuid())
+  companyId String
+  plan      String    // basic, premium, enterprise
+  price     Int       @default(100000) // 月額料金（円）
+  status    String    @default("active") // active, cancelled, expired
+  startDate DateTime  @default(now())
+  endDate   DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // リレーション
+  company   Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@index([status])
+  @@index([endDate])
+  @@map("subscriptions")
+}
+
+// Instagram投稿キャッシュモデル
+model InstagramPost {
+  id        String    @id @default(cuid())
+  companyId String
+  postUrl   String    @unique
+  imageUrl  String?
+  caption   String?
+  postedAt  DateTime
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // リレーション
+  company   Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@index([postedAt])
+  @@map("instagram_posts")
+}
+
+// Payment model (Stripe integration)
+model Payment {
+  id              String        @id @default(cuid())
+  amount          Float
+  currency        String        @default("jpy")
+  status          PaymentStatus @default(PENDING)
+  stripePaymentId String?       @unique
+  userId          String
+  metadata        Json?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  // リレーション
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("payments")
+}
+
+// Payment status enumeration
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+}
+
+// Waiting List model for when 300 company limit is reached
+model WaitingList {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  phone     String?
+  message   String?
+  status    WaitingListStatus @default(WAITING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+  @@map("waiting_list")
+}
+
+// Waiting list status enumeration
+enum WaitingListStatus {
+  WAITING
+  CONTACTED
+  REGISTERED
+  CANCELLED
+}
+
+// System configuration for tracking limits
+model SystemConfig {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("system_config")
+}

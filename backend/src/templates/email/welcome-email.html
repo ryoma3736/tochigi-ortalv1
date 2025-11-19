@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>栃木ポータルへようこそ</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      line-height: 1.8;
+      color: #333;
+      background-color: #f4f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    .email-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    .email-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      padding: 40px 30px;
+      text-align: center;
+    }
+    .logo {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+    .email-header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 600;
+    }
+    .email-header p {
+      margin: 15px 0 0 0;
+      font-size: 15px;
+      opacity: 0.95;
+    }
+    .email-body {
+      padding: 40px 30px;
+    }
+    .welcome-message {
+      text-align: center;
+      padding: 30px 20px;
+      margin: 20px 0;
+    }
+    .welcome-message h2 {
+      margin: 0 0 15px 0;
+      font-size: 24px;
+      color: #2d3748;
+    }
+    .welcome-message p {
+      margin: 0;
+      font-size: 16px;
+      color: #4a5568;
+      line-height: 1.7;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 30px 0;
+    }
+    .feature-card {
+      background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+      border-radius: 8px;
+      padding: 25px 20px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-3px);
+    }
+    .feature-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+    .feature-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #2d3748;
+      margin: 0 0 8px 0;
+    }
+    .feature-desc {
+      font-size: 13px;
+      color: #718096;
+      margin: 0;
+      line-height: 1.6;
+    }
+    .account-info {
+      background-color: #ebf8ff;
+      border: 2px solid #4299e1;
+      border-radius: 8px;
+      padding: 25px;
+      margin: 30px 0;
+    }
+    .account-info h3 {
+      margin: 0 0 15px 0;
+      font-size: 18px;
+      color: #2c5282;
+    }
+    .info-row {
+      margin: 12px 0;
+      font-size: 14px;
+    }
+    .info-label {
+      font-weight: 600;
+      color: #2c5282;
+      display: inline-block;
+      width: 120px;
+    }
+    .info-value {
+      color: #2d3748;
+    }
+    .cta-section {
+      text-align: center;
+      margin: 35px 0;
+      padding: 30px;
+      background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+      border-radius: 8px;
+    }
+    .cta-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #553c9a;
+      margin: 0 0 20px 0;
+    }
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      padding: 15px 40px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 16px;
+      margin: 10px;
+      transition: transform 0.2s;
+    }
+    .cta-button:hover {
+      transform: translateY(-2px);
+    }
+    .steps-section {
+      margin: 35px 0;
+    }
+    .steps-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #2d3748;
+      margin: 0 0 20px 0;
+      text-align: center;
+    }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      margin: 20px 0;
+      padding: 20px;
+      background-color: #f7fafc;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
+    }
+    .step-number {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-right: 20px;
+    }
+    .step-content h4 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      color: #2d3748;
+    }
+    .step-content p {
+      margin: 0;
+      font-size: 14px;
+      color: #4a5568;
+      line-height: 1.6;
+    }
+    .benefits-section {
+      background-color: #f0fff4;
+      border: 2px solid #48bb78;
+      border-radius: 8px;
+      padding: 25px;
+      margin: 30px 0;
+    }
+    .benefits-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #22543d;
+      margin: 0 0 15px 0;
+      text-align: center;
+    }
+    .benefit-item {
+      padding: 10px 0;
+      font-size: 14px;
+      color: #276749;
+      line-height: 1.6;
+    }
+    .benefit-item::before {
+      content: "✓ ";
+      color: #48bb78;
+      font-weight: bold;
+      font-size: 16px;
+      margin-right: 8px;
+    }
+    .support-section {
+      background-color: #fffaf0;
+      border: 1px solid #fbd38d;
+      border-radius: 8px;
+      padding: 25px;
+      margin: 30px 0;
+      text-align: center;
+    }
+    .support-section h4 {
+      margin: 0 0 15px 0;
+      font-size: 18px;
+      color: #744210;
+    }
+    .support-section p {
+      margin: 8px 0;
+      font-size: 14px;
+      color: #744210;
+      line-height: 1.6;
+    }
+    .email-footer {
+      background-color: #edf2f7;
+      padding: 30px;
+      text-align: center;
+      font-size: 13px;
+      color: #718096;
+      line-height: 1.6;
+    }
+    .social-links {
+      margin: 20px 0;
+    }
+    .social-link {
+      display: inline-block;
+      margin: 0 10px;
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #cbd5e0, transparent);
+      margin: 30px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="email-header">
+      <div class="logo">🏯</div>
+      <h1>栃木ポータルへようこそ！</h1>
+      <p>アカウント登録が完了しました</p>
+    </div>
+
+    <div class="email-body">
+      <div class="welcome-message">
+        <h2>{{name}} 様</h2>
+        <p>
+          この度は栃木ポータルにご登録いただき、誠にありがとうございます。<br>
+          {{#if (eq accountType "vendor")}}
+          業者アカウントの登録が完了いたしました。
+          {{else}}
+          お客様アカウントの登録が完了いたしました。
+          {{/if}}
+        </p>
+      </div>
+
+      <div class="account-info">
+        <h3>アカウント情報</h3>
+        <div class="info-row">
+          <span class="info-label">お名前：</span>
+          <span class="info-value">{{name}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">メールアドレス：</span>
+          <span class="info-value">{{email}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">アカウント種別：</span>
+          <span class="info-value">
+            {{#if (eq accountType "vendor")}}
+            業者アカウント
+            {{else}}
+            お客様アカウント
+            {{/if}}
+          </span>
+        </div>
+      </div>
+
+      {{#if (eq accountType "vendor")}}
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <h3 class="feature-title">プロフィール管理</h3>
+          <p class="feature-desc">会社情報やサービス内容を自由に編集</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📧</div>
+          <h3 class="feature-title">問い合わせ受信</h3>
+          <p class="feature-desc">お客様からの問い合わせを即座に受信</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3 class="feature-title">分析ダッシュボード</h3>
+          <p class="feature-desc">アクセス数や問い合わせ数を可視化</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⭐</div>
+          <h3 class="feature-title">レビュー管理</h3>
+          <p class="feature-desc">お客様の評価を確認・返信</p>
+        </div>
+      </div>
+
+      <div class="steps-section">
+        <h3 class="steps-title">今すぐ始める3つのステップ</h3>
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>プロフィールを充実させる</h4>
+            <p>会社情報、サービス内容、料金、実績などを詳しく記載しましょう。詳細なプロフィールほど問い合わせが増えます。</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>写真・画像をアップロード</h4>
+            <p>サービスの様子や過去の施工例などの画像を追加すると、お客様の信頼度が向上します。</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>問い合わせに迅速に対応</h4>
+            <p>お客様からの問い合わせには24時間以内の返信を心がけましょう。早い対応が成約率を高めます。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="benefits-section">
+        <h3 class="benefits-title">業者アカウントの特典</h3>
+        <div class="benefit-item">月額無料でプロフィール掲載</div>
+        <div class="benefit-item">無制限の問い合わせ受信</div>
+        <div class="benefit-item">SEO最適化済みのページ</div>
+        <div class="benefit-item">24時間365日のシステムサポート</div>
+        <div class="benefit-item">定期的な集客支援メール配信</div>
+      </div>
+      {{else}}
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3 class="feature-title">業者検索</h3>
+          <p class="feature-desc">条件に合った業者を簡単に探せます</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3 class="feature-title">一括問い合わせ</h3>
+          <p class="feature-desc">複数業者に一度に問い合わせ可能</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⭐</div>
+          <h3 class="feature-title">レビュー閲覧</h3>
+          <p class="feature-desc">他のお客様の評価を参考にできます</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3 class="feature-title">マイページ</h3>
+          <p class="feature-desc">問い合わせ履歴を一元管理</p>
+        </div>
+      </div>
+
+      <div class="steps-section">
+        <h3 class="steps-title">サービス利用の流れ</h3>
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>業者を検索</h4>
+            <p>サービスカテゴリー、地域、予算などの条件で、ニーズに合った業者を検索できます。</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>一括問い合わせ</h4>
+            <p>気になる業者を複数選択して、一度に問い合わせを送信。時間を節約できます。</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>比較・検討</h4>
+            <p>各業者からの返信を比較して、最適なサービスを選択できます。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="benefits-section">
+        <h3 class="benefits-title">お客様アカウントの特典</h3>
+        <div class="benefit-item">完全無料でご利用可能</div>
+        <div class="benefit-item">何度でも問い合わせ可能</div>
+        <div class="benefit-item">マイページで履歴管理</div>
+        <div class="benefit-item">お気に入り業者の保存機能</div>
+        <div class="benefit-item">新着業者の通知サービス</div>
+      </div>
+      {{/if}}
+
+      <div class="cta-section">
+        <h3 class="cta-title">さっそく始めましょう！</h3>
+        {{#if (eq accountType "vendor")}}
+        <a href="https://tochigi-portal.com/vendor/dashboard" class="cta-button">
+          ダッシュボードを開く
+        </a>
+        <a href="https://tochigi-portal.com/vendor/profile/edit" class="cta-button">
+          プロフィール編集
+        </a>
+        {{else}}
+        <a href="https://tochigi-portal.com/vendors" class="cta-button">
+          業者を探す
+        </a>
+        <a href="https://tochigi-portal.com/services" class="cta-button">
+          サービス一覧
+        </a>
+        {{/if}}
+      </div>
+
+      <div class="support-section">
+        <h4>困ったときは</h4>
+        <p>
+          ご不明な点やお困りのことがございましたら、<br>
+          カスタマーサポートまでお気軽にお問い合わせください。<br>
+          <strong>support@tochigi-portal.com</strong><br>
+          平日 9:00-18:00 対応
+        </p>
+      </div>
+
+      <div class="divider"></div>
+
+      <p style="text-align: center; font-size: 14px; color: #718096; margin-top: 30px;">
+        それでは、栃木ポータルをお楽しみください。<br>
+        今後ともよろしくお願いいたします。
+      </p>
+    </div>
+
+    <div class="email-footer">
+      <p style="margin: 0 0 10px 0; font-weight: 600; color: #4a5568; font-size: 16px;">栃木ポータル</p>
+      <p style="margin: 5px 0;">
+        〒320-0000 栃木県宇都宮市○○町1-2-3<br>
+        Email: support@tochigi-portal.com<br>
+        Tel: 028-XXX-XXXX
+      </p>
+      <div class="social-links">
+        <a href="https://twitter.com/tochigi_portal" class="social-link">Twitter</a>
+        <a href="https://facebook.com/tochigiportal" class="social-link">Facebook</a>
+        <a href="https://instagram.com/tochigi_portal" class="social-link">Instagram</a>
+      </div>
+      <p style="margin: 15px 0 0 0; font-size: 12px;">
+        このメールは栃木ポータルのシステムから自動送信されています。<br>
+        配信停止をご希望の場合は、マイページから設定を変更してください。
+      </p>
+    </div>
+  </div>
+</body>
+</html>

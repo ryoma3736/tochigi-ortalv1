@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新規問い合わせ通知</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      line-height: 1.8;
+      color: #333;
+      background-color: #f4f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    .email-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    .email-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      padding: 30px;
+      text-align: center;
+    }
+    .email-header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+    .email-header p {
+      margin: 10px 0 0 0;
+      font-size: 14px;
+      opacity: 0.95;
+    }
+    .email-body {
+      padding: 40px 30px;
+    }
+    .greeting {
+      font-size: 16px;
+      margin-bottom: 25px;
+      color: #2d3748;
+    }
+    .info-card {
+      background-color: #f7fafc;
+      border-left: 4px solid #667eea;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .info-card h2 {
+      margin: 0 0 15px 0;
+      font-size: 18px;
+      color: #2d3748;
+      font-weight: 600;
+    }
+    .info-row {
+      display: flex;
+      margin: 12px 0;
+      padding: 10px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    .info-label {
+      font-weight: 600;
+      color: #4a5568;
+      min-width: 120px;
+      font-size: 14px;
+    }
+    .info-value {
+      color: #2d3748;
+      flex: 1;
+      font-size: 14px;
+    }
+    .services-list {
+      background-color: #edf2f7;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 8px;
+    }
+    .service-tag {
+      display: inline-block;
+      background-color: #667eea;
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin: 4px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .message-box {
+      background-color: #fffaf0;
+      border: 1px solid #fbd38d;
+      border-radius: 6px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .message-box h3 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      color: #744210;
+    }
+    .message-content {
+      color: #744210;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      padding: 14px 32px;
+      text-decoration: none;
+      border-radius: 6px;
+      margin: 25px 0;
+      font-weight: 600;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .cta-button:hover {
+      transform: translateY(-2px);
+    }
+    .email-footer {
+      background-color: #edf2f7;
+      padding: 25px 30px;
+      text-align: center;
+      font-size: 13px;
+      color: #718096;
+      line-height: 1.6;
+    }
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #cbd5e0, transparent);
+      margin: 30px 0;
+    }
+    .note {
+      background-color: #e6fffa;
+      border-left: 4px solid #38b2ac;
+      padding: 15px;
+      margin: 20px 0;
+      font-size: 13px;
+      color: #234e52;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="email-header">
+      <h1>新規お問い合わせ通知</h1>
+      <p>栃木ポータルから新しいお問い合わせが届きました</p>
+    </div>
+
+    <div class="email-body">
+      <p class="greeting">
+        {{vendorName}} 様
+      </p>
+
+      <p>
+        いつも栃木ポータルをご利用いただきありがとうございます。<br>
+        お客様から新しいお問い合わせが届きましたのでお知らせいたします。
+      </p>
+
+      <div class="info-card">
+        <h2>お客様情報</h2>
+        <div class="info-row">
+          <span class="info-label">お名前：</span>
+          <span class="info-value">{{customerName}} 様</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">メールアドレス：</span>
+          <span class="info-value">{{customerEmail}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">電話番号：</span>
+          <span class="info-value">{{customerPhone}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">お問い合わせ日時：</span>
+          <span class="info-value">{{inquiryDate}}</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h2>ご希望のサービス</h2>
+        <div class="services-list">
+          {{#each services}}
+          <span class="service-tag">{{this}}</span>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="message-box">
+        <h3>お問い合わせ内容</h3>
+        <div class="message-content">{{message}}</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div style="text-align: center;">
+        <a href="mailto:{{customerEmail}}" class="cta-button">
+          お客様に返信する
+        </a>
+      </div>
+
+      <div class="note">
+        <strong>対応のお願い</strong><br>
+        お客様は複数の業者様に同時に問い合わせを送信している可能性がございます。<br>
+        早めのご返信をお願いいたします。
+      </div>
+
+      <p style="margin-top: 30px; font-size: 14px; color: #718096;">
+        このメールへの返信は、お客様（{{customerEmail}}）に直接届きます。<br>
+        お問い合わせ内容をご確認の上、できるだけ早くご返信いただけますと幸いです。
+      </p>
+    </div>
+
+    <div class="email-footer">
+      <p style="margin: 0 0 10px 0; font-weight: 600; color: #4a5568;">栃木ポータル</p>
+      <p style="margin: 5px 0;">
+        〒320-0000 栃木県宇都宮市○○町1-2-3<br>
+        Email: support@tochigi-portal.com<br>
+        Tel: 028-XXX-XXXX
+      </p>
+      <p style="margin: 15px 0 0 0; font-size: 12px;">
+        このメールは栃木ポータルのシステムから自動送信されています。<br>
+        お問い合わせは上記サポートアドレスまでお願いいたします。
+      </p>
+    </div>
+  </div>
+</body>
+</html>
